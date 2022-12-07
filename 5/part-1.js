@@ -5,13 +5,16 @@ const input = await fs.readFile('./input.txt', 'utf-8')
 const [stackInput, instructionInput] = input.split('\n\n')
 
 // stacks
-const stacks = [[], [], [], [], [], [], [], [], [], []]
+const stacks = []
 stackInput
   .split('\n')
   .slice(0, -1)
   .forEach((line) => {
     let stackId = 0
     for (let i = 1; i < line.length; i += 4) {
+      if (stacks.length <= stackId) {
+        stacks.push([])
+      }
       if (line[i] !== ' ') {
         stacks[stackId].push(line[i])
       }
@@ -36,8 +39,6 @@ const instructions = instructionInput.split('\n').map((line) => {
   }
 })
 
-console.log(instructions)
-
 instructions.forEach((inst) => {
   const startStack = stacks[inst.start - 1]
   const endStack = stacks[inst.end - 1]
@@ -47,8 +48,6 @@ instructions.forEach((inst) => {
     endStack.push(item)
   }
 })
-
-console.log(stacks)
 
 let result = ''
 stacks.forEach((stack) => (result += stack[stack.length - 1]))
