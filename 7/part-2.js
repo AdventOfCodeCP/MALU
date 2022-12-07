@@ -59,14 +59,12 @@ const getNode = (line) => {
 }
 
 const traverse = (node) => {
-  const sizes = []
+  const sizes = [node.calcSize()]
   const rec = (node) => {
     node.children.forEach((c) => {
       if (c.isDir) {
-        const size = c.calcSize()
-        if (size < 100000) {
-          sizes.push(size)
-        }
+        // const size = c.calcSize()
+        sizes.push(c.calcSize())
         return rec(c)
       }
     })
@@ -85,4 +83,12 @@ for (let i = 0; i < input.length; i++) {
   }
 }
 
-console.log(traverse(root).reduce((a, b) => a + b))
+const dirs = traverse(root)
+
+const usedSpace = root.calcSize()
+const spaceToFree = 30000000 - (70000000 - usedSpace)
+let smallestPossible = usedSpace
+dirs.forEach((dir) => {
+  if (dir >= spaceToFree && dir < smallestPossible) smallestPossible = dir
+})
+console.log(smallestPossible)
