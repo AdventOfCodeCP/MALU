@@ -2,87 +2,60 @@ import { promises as fs } from 'fs'
 
 const input = (await fs.readFile('./input.txt', 'utf-8')).split('\n')
 
-class Node {
-  constructor(name, children, parent, size, isDir) {
+class Directory {
+  constructor(name, parent) {
     this.name = name
-    this.children = children
     this.parent = parent
-    this.size = size
-    this.isDir = isDir
+    this.subDirs = []
+    this.size = 0
   }
 
-  calcSize() {
-    const size =
-      this.children.length > 0
-        ? this.children.map((c) => c.calcSize()).reduce((a, b) => a + b)
-        : this.size
-
-    return size ?? 0
+  recSize() {
+    return this.subDirs.length > 0
+      ? this.size + this.subDirs.map((d) => d.recSize()).reduce((a, b) => a + b)
+      : this.size
   }
-}
 
-const isCommand = (line) => line.split(' ')[0] === '$'
+  runCd(name) {
+    const subDir = this.subDirs.find((d) => d.name === name)
+    if (subDir) return subDir
 
-const getCommand = (line, lineNumber) => {
-  const s = line.split(' ')
-  return {
-    command: s[1],
-    parameter: s[2],
-    lineNumber: lineNumber,
+    const newSubDir = new Directory(name, this)
+    this.subDirs.push(newSubDir)
+    return newSubDir
   }
 }
 
-const performCommand = (command) => {
-  if (command.command === 'cd' && command.parameter === '..') {
-    currentNode = currentNode.parent
-  } else if (command.command === 'cd') {
-    const newNode = currentNode
-      ? currentNode.children.find((c) => c.name === command.parameter)
-      : new Node('/', [], null, null)
+const buildTree = (root) => {
+  let currentDir = root
 
-    if (!currentNode) root = newNode
-    currentNode = newNode
-  } else if (command.command === 'ls') {
-    for (let i = command.lineNumber + 1; i < input.length; i++) {
-      if (isCommand(input[i])) break
-      const node = getNode(input[i])
-      currentNode.children.push(node)
+  for (let i = 1; i < input.length; i++) {
+    const [p1, p2, dir] = input[i].split(' ')
+
+    if (p1 === '$' && p2 === 'cd') {
+      currentDir = dir === '..' ? currentDir.parent : currentDir.runCd(dir)
+    }
+
+    if (p1 !== '$' && p1 !== 'dir') {
+      currentDir.size += Number(p1)
     }
   }
 }
 
-const getNode = (line) => {
-  const [info, name] = line.split(' ')
-  return info === 'dir'
-    ? new Node(name, [], currentNode, null, true)
-    : new Node(name, [], currentNode, Number(info), false)
-}
+const traverse = (root) => {
+  let totalSize = 0
+  const rec = (dir) => {
+    dir.subDirs.forEach((subDir) => {
+      const size = subDir.recSize()
+      if (size <= 100000) totalSize += size
 
-const traverse = (node) => {
-  const sizes = []
-  const rec = (node) => {
-    node.children.forEach((c) => {
-      if (c.isDir) {
-        const size = c.calcSize()
-        if (size < 100000) {
-          sizes.push(size)
-        }
-        return rec(c)
-      }
+      rec(subDir)
     })
   }
-
-  rec(node)
-  return sizes
+  rec(root)
+  return totalSize
 }
 
-let currentNode = null
-let root = null
-for (let i = 0; i < input.length; i++) {
-  if (isCommand(input[i])) {
-    const cmd = getCommand(input[i], i)
-    performCommand(cmd)
-  }
-}
-
-console.log(traverse(root).reduce((a, b) => a + b))
+const root = new Directory('/', null)
+buildTree(root)
+console.log(traverse(root))
