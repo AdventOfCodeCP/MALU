@@ -8,9 +8,7 @@ const sum = input
     const part1 = line.slice(0, line.length / 2)
     const part2 = line.slice(line.length / 2, line.length)
     const dupl = [...part1].find((c) => part2.includes(c))
-    return dupl === dupl.toUpperCase()
-      ? dupl.charCodeAt(0) - 38
-      : dupl.charCodeAt(0) - 96
+    return dupl === dupl.toUpperCase() ? dupl.charCodeAt(0) - 38 : dupl.charCodeAt(0) - 96
   })
   .reduce((a, b) => a + b)
 

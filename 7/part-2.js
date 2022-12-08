@@ -56,9 +56,7 @@ const traverse = (root) => {
 
 const findBestMatch = (root, sizes) => {
   const target = 30000000 - (70000000 - root.recSize())
-  return sizes.reduce((best, curr) =>
-    curr >= target && curr < best ? curr : best
-  )
+  return sizes.reduce((best, curr) => (curr >= target && curr < best ? curr : best))
 }
 
 const root = new Directory('/', null)

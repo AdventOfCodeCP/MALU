@@ -1,8 +1,6 @@
 import { promises as fs } from 'fs'
 
-const field = (await fs.readFile('./input.txt', 'utf-8'))
-  .split('\n')
-  .map((l) => l.split(''))
+const field = (await fs.readFile('./input.txt', 'utf-8')).split('\n').map((l) => l.split(''))
 
 const checkAllDirs = (x, y, val) => {
   const checkRight = () => {

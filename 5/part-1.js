@@ -29,9 +29,7 @@ stacks.forEach((stack) => {
 // instructions
 const instructions = instructionInput.split('\n').map((line) => {
   const splitted = line.split(' ')
-  const [count, start, end] = [splitted[1], splitted[3], splitted[5]].map((n) =>
-    Number(n)
-  )
+  const [count, start, end] = [splitted[1], splitted[3], splitted[5]].map((n) => Number(n))
   return {
     count,
     start,
