@@ -3,21 +3,21 @@ import { promises as fs } from 'fs'
 const field = (await fs.readFile('./input.txt', 'utf-8')).split('\n').map((l) => l.split(''))
 
 const checkAllDirs = (x, y, val) => {
-  const checkRight = field[y].slice(x + 1, field[y].length).every((v) => v < val)
+  const right = field[y].slice(x + 1, field[y].length).every((v) => v < val)
 
-  const checkLeft = field[y].slice(0, x).every((v) => v < val)
+  const left = field[y].slice(0, x).every((v) => v < val)
 
-  const checkDown = field
+  const down = field
     .map((f) => f[x])
     .slice(y + 1, field.length)
     .every((v) => v < val)
 
-  const checkUp = field
+  const up = field
     .map((f) => f[x])
     .slice(0, y)
     .every((v) => v < val)
 
-  return checkRight || checkLeft || checkDown || checkUp
+  return right || left || down || up
 }
 
 const edgeTrees = field.length * 2 + field[0].length * 2 - 4
