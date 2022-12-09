@@ -1,41 +1,4 @@
 
-Skip to content
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
-@lmachegger
-JetBrains /
-kotlin
-Public
-
-Code
-Pull requests 155
-Actions
-Security
-
-    Insights
-
-kotlin/.gitignore
-@ilya-g
-ilya-g Do not commit to vcs protoeditor.xml settings
-Latest commit 0251d43 Sep 16, 2022
-History
-37 contributors
-@4u7
-@snrostov
-@yanex
-@shafirov
-@demiurg906
-@shalupov
-@nikitabobko
-@ilya-g
-@ilgonmic
-@ligee
-@bashor
-@goodwinnk
-76 lines (76 sloc) 1.83 KB
 .DS_Store
 .idea/shelf
 /confluence/target
@@ -112,19 +75,4 @@ outTmp/
 /test.output
 /kotlin-native/dist
 kotlin-ide/
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-
-    Terms
-    Privacy
-    Security
-    Status
-    Docs
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
 
