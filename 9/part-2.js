@@ -21,20 +21,14 @@ const solve = () => {
           visitedPoints.push(tails[j])
         }
       }
-      // console.log('newStep', [head].concat(tails))
     }
   }
 
   const move = (prev, dir) => {
-    if (dir === 'U') {
-      return { x: prev.x, y: prev.y + 1 }
-    } else if (dir === 'D') {
-      return { x: prev.x, y: prev.y - 1 }
-    } else if (dir === 'L') {
-      return { x: prev.x - 1, y: prev.y }
-    } else if (dir === 'R') {
-      return { x: prev.x + 1, y: prev.y }
-    }
+    if (dir === 'U') return { x: prev.x, y: prev.y + 1 }
+    if (dir === 'D') return { x: prev.x, y: prev.y - 1 }
+    if (dir === 'L') return { x: prev.x - 1, y: prev.y }
+    if (dir === 'R') return { x: prev.x + 1, y: prev.y }
   }
 
   const moveTail = (next, self) => {
@@ -56,7 +50,7 @@ const solve = () => {
     performMoves(cmd)
   })
 
-  console.log(visitedPoints.length)
+  return visitedPoints.length
 }
 
-solve()
+console.log(solve())
