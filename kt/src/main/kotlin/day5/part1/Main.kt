@@ -8,8 +8,7 @@ fun main() {
     val (stacksInput, movesInput) = read("5").split("\n\n")
     val stacks = buildStacks(stacksInput)
 
-    movesInput.split("\n").forEach{
-            it ->
+    movesInput.split("\n").forEach { it ->
         val (amount, from, to) = MOVE_MATCHER.matchEntire(it)!!.groups.toList().drop(1)
             .map { Integer.valueOf(it!!.value) }
         repeat(amount) {
@@ -17,6 +16,13 @@ fun main() {
             stacks[to - 1].push(crate)
         }
     }
+
+    val result = stacks.map {
+        if (it.empty()) ""
+        else it.pop()
+    }
+
+    println(result)
 }
 
 fun buildStacks(input: String): MutableList<Stack<Char>> {
