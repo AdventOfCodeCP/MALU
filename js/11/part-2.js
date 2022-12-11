@@ -20,9 +20,6 @@ class Monkey {
       return val % modVal
     })
 
-    // const mod = newItems.length > 0 ? newItems.reduce((a, b) => a * b) : 1
-    // const newItemsMod = newItems.map((item) => item % mod)
-
     this.items = newItems
   }
 
@@ -77,5 +74,3 @@ const [monka1, monka2] = Array.from(monkeys.values())
   .slice(0, 2)
 
 console.log(monka1 * monka2)
-
-console.log(Array.from(monkeys.values()).map((m) => m.operationCount))
